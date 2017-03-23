@@ -18,8 +18,8 @@ int main(int argc, char *argv[])
     int message_in;
     MPI_Status status;
 
-    MPI_Send(&message_out, 1, MPI_INT, 2, 999, MPI_COMM_WORLD);
     MPI_Recv(&message_in,  1, MPI_INT, 2, 999, MPI_COMM_WORLD, &status);
+    MPI_Send(&message_out, 1, MPI_INT, 2, 999, MPI_COMM_WORLD);
 
     printf("Rank %d received %d\n", rank, message_in);
   } else if (rank == 2) {
@@ -27,9 +27,8 @@ int main(int argc, char *argv[])
     int message_in;
     MPI_Status status_2;
 
-    MPI_Recv(&message_in,  1, MPI_INT, 0, 999, MPI_COMM_WORLD, &status_2);
     MPI_Send(&message_out, 1, MPI_INT, 0, 999, MPI_COMM_WORLD);
-
+    MPI_Recv(&message_in,  1, MPI_INT, 0, 999, MPI_COMM_WORLD, &status_2);
 
     printf("Rank %d received %d\n", rank, message_in);
   }
