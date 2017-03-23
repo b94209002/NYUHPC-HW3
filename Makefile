@@ -1,6 +1,6 @@
 CC=mpicc
 FLAGS=-O3
-EXECS=sr sr2 pingpong pingpong_array pingpong_nonblocking
+EXECS=sr sr2 sr2_nonblocking pingpong pingpong_array pingpong_nonblocking
 
 all: ${EXECS}
 
@@ -9,6 +9,9 @@ sr: sr.c
 
 sr2: sr2.c
 	${CC} ${FLAGS} $^ -o sr2
+
+sr2_nonblocking: sr2_nonblocking.c
+	${CC} ${FLAGS} $^ -o sr2_nonblocking
 
 pingpong: pingpong.c
 	${CC} ${FLAGS} $^ -o pingpong
