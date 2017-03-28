@@ -8,7 +8,7 @@
 
 int main( int argc, char *argv[])
 {
-  int rank, tag, origin, destination;
+  int rank, tag, source, destination;
   MPI_Status status;
 
   char hostname[1024];
@@ -20,25 +20,23 @@ int main( int argc, char *argv[])
   int message_out = rank;
   int message_in = -1;
   tag = 99;
-
-  if(rank % 2 == 0)
+  int i; int n = 6;
+  if (rank == 0 ) message_in = 333;
+  for (i=0;i<n; i++){
+  if(rank % n == i)
   {
-    destination = rank + 1;
-    origin = rank + 1;
-
-    MPI_Send(&message_out, 1, MPI_INT, destination, tag, MPI_COMM_WORLD);
-    MPI_Recv(&message_in,  1, MPI_INT, origin,      tag, MPI_COMM_WORLD, &status);
-  }
-  else
-  {
-    destination = rank - 1;
-    origin = rank - 1;
-
-    MPI_Recv(&message_in,  1, MPI_INT, origin,      tag, MPI_COMM_WORLD, &status);
+    destination = (rank +1) %n;
+    message_out = message_in;
     MPI_Send(&message_out, 1, MPI_INT, destination, tag, MPI_COMM_WORLD);
   }
+  else if (rank % n == i+1)
+  {
+    source = (rank+n -1)%n ;
 
-  printf("rank %d hosted on %s received from %d the message %d\n", rank, hostname, origin, message_in);
+    MPI_Recv(&message_in,  1, MPI_INT, source, tag, MPI_COMM_WORLD, &status);
+  }
+  }
+  printf("rank %d hosted on %s received from %d the message %d\n", rank, hostname, source, message_in);
 
   MPI_Finalize();
   return 0;
