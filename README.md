@@ -31,17 +31,26 @@ mpirun -n 20 ./int_ring 1000
 
 1000 rounds, rank 0, communication time 4.636791 sec. 
 
+Latency = 2.3 x 10^-4 sec
+
 mpirun -n 10 ./int_ring 1000
 
 1000 rounds, rank 0, communication time 0.014833 sec.
 
+Latency = 1.5 x 10^-6 sec 
+
 3. Test for large array data[500,000]
 
-mpirun -n 20 ./int_ring 1000
+mpirun -n 20 ./int_ring 100
 
-1000 rounds, rank 0, communication time 30.671689 sec.
+100 rounds, rank 0, communication time 59.738771 sec.
 
-mpiexec -n 10 ./int_ring 1
+Bandwidth = 2 x 100 x 20 / 59.738771 = 66.95 MB/s 
 
-1000 rounds, rank 0, communication time 14.280453 sec.
+mpirun -n 10 ./int_ring 100
+
+100 rounds, rank 0, communication time 14.280453 sec.
+
+ndwidth = 2 x 100 x 10 / 59.738771 = 60.10 MB/s
+
 

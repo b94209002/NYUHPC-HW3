@@ -53,7 +53,7 @@ int main( int argc, char *argv[])
   }
   time2 = MPI_Wtime();
   double elapsed = time2 - time1;
-//  printf("%d rounds, rank %d, communication time %f \n sec. ",k, rank, elapsed);
+//  printf("%d rounds, rank %d, communication time %f sec. \n ",k, rank, elapsed);
 
   MPI_Finalize();
   return 0;
