@@ -8,11 +8,12 @@
 
 int main( int argc, char *argv[])
 {
-  int rank, tag, source, destination, m;
+  int rank, tag, source, destination, m, n;
   MPI_Status status;
 
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &n);
 
   if (argc != 2) {
     fprintf(stderr, "Function needs the number of passes as input arguments!\n");
@@ -23,7 +24,8 @@ int main( int argc, char *argv[])
   int message_out = rank;
   int message_in = -1;
   tag = 99;
-  int i,k; int n = 6;
+  int i,k, length = 500000;
+//  int data[500000];
 
   double  time1,time2;
   time1 = MPI_Wtime();
@@ -36,6 +38,7 @@ int main( int argc, char *argv[])
   {
     destination = (rank +1) %n;
     message_out = message_in + rank;
+//    MPI_Send(&data, length, MPI_INT, destination, tag, MPI_COMM_WORLD);
     MPI_Send(&message_out, 1, MPI_INT, destination, tag, MPI_COMM_WORLD);
   }
   else if ((rank+n-1) % n == i)
@@ -43,6 +46,7 @@ int main( int argc, char *argv[])
     source = (rank+n -1)%n ;
 
     MPI_Recv(&message_in,  1, MPI_INT, source, tag, MPI_COMM_WORLD, &status);
+//    MPI_Recv(&data,  length, MPI_INT, source, tag, MPI_COMM_WORLD, &status);
   }
   }
 //  printf("%d rounds, rank %d received from %d the message %d \n",k, rank, source, message_in);
