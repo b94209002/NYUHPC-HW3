@@ -49,11 +49,11 @@ int main( int argc, char *argv[])
 //    MPI_Recv(&data,  length, MPI_INT, source, tag, MPI_COMM_WORLD, &status);
   }
   }
-//  printf("%d rounds, rank %d received from %d the message %d \n",k, rank, source, message_in);
+  printf("%d rounds, rank %d received from %d the message %d \n",k, rank, source, message_in);
   }
   time2 = MPI_Wtime();
   double elapsed = time2 - time1;
-  printf("%d rounds, rank %d, communication time %f \n ",k, rank, elapsed);
+//  printf("%d rounds, rank %d, communication time %f \n sec. ",k, rank, elapsed);
 
   MPI_Finalize();
   return 0;
